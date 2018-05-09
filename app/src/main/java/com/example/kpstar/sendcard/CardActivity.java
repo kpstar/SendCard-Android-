@@ -108,8 +108,8 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         mTemp = (TextView)findViewById(R.id.edtEmail);
         String email = sharedPreferences.getString("email", "");
         float emailWidth = mHeight;
-        if (email.length() > 15) {
-            emailWidth = (float) (mWidth/(email.length()*2.0f));
+        if (email.length() > 18) {
+            emailWidth = (float) (mWidth/((email.length()-5)*2.0f));
         }
         mTemp.setText(email);
         mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, emailWidth);
@@ -117,17 +117,14 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         mTemp = (TextView)findViewById(R.id.edtAddress);
         email = sharedPreferences.getString("address", "");
         emailWidth = mHeight;
-        if (email.length() > 15) {
-            emailWidth = (float) (mWidth/(email.length()*2.0f));
-        }
         mTemp.setText(email);
         mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, emailWidth);
 
         mTemp = (TextView)findViewById(R.id.edtWebsite);
         email = sharedPreferences.getString("website", "");
         emailWidth = mHeight;
-        if (email.length() > 15) {
-            emailWidth = (float) (mWidth/(email.length()*2.0f));
+        if (email.length() > 18) {
+            emailWidth = (float) (mWidth/((email.length()-5)*2.0f));
         }
         mTemp.setText(email);
         mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, emailWidth);

@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
                 android:maxLines="1"
@@ -54,8 +54,7 @@
             <TextView
                 android:id="@+id/edt"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="5dp"
                 android:maxLines="1"
                 android:text="" />
 
@@ -66,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="" />
 
             <TextView
@@ -92,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="@color/colorBlack"
                 android:text="" />
 
@@ -101,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:maxLines="1"
                 android:textColor="@color/colorBlack"
                 android:text="" />
