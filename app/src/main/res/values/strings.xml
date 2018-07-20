@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Amplified Referrals</string>
+    <array name="autosize_text_sizes">
+        <item>6dp</item>
+        <item>7dp</item>
+        <item>8dp</item>
+        <item>9dp</item>
+        <item>10dp</item>
+        <item>11dp</item>
+        <item>12dp</item>
+        <item>13dp</item>
+        <item>14dp</item>
+        <item>15dp</item>
+        <item>16dp</item>
+        <item>17dp</item>
+        <item>18dp</item>
+    </array>
 </resources>

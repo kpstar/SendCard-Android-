@@ -31,13 +31,17 @@
             android:paddingLeft="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
                 android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="20dp"
+                android:autoSizeMaxTextSize="25dp"
+                app:minTextSize="8dp"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:text="" />
@@ -58,14 +62,18 @@
                 android:maxLines="1"
                 android:text="" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/edtCompany"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold"
-                android:maxLines="2"
+                android:singleLine="true"
+                android:autoSizeMaxTextSize="25dp"
+                android:textSize="20dp"
+                app:minTextSize="8dp"
+                android:maxLines="1"
                 android:text="" />
 
             <TextView
@@ -77,13 +85,16 @@
                 android:textColor="@color/colorBlack"
                 android:text="" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
+                android:singleLine="true"
+                android:autoSizeMaxTextSize="18dp"
+                android:textSize="18dp"
+                app:minTextSize="6dp"
                 android:maxLines="1"
-                android:layout_weight="1"
                 android:text="" />
 
             <TextView

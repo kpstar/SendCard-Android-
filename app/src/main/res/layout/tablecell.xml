@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="30dp"
+    android:orientation="horizontal">
 
+
+    <TextView
+        android:id="@+id/txtNo"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:textSize="10dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:gravity="center|bottom"
+        android:background="@drawable/textviewshape"
+        android:text="No" />
+
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:textSize="10dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:background="@drawable/textviewshape"
+        android:gravity="center|bottom"
+        android:text="Username" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="10dp"
+        android:textColor="@color/colorBlack"
+        android:layout_weight="1"
+        android:background="@drawable/textviewshape"
+        android:textStyle="bold"
+        android:gravity="center|bottom"
+        android:text="Email" />
+
+    <TextView
+        android:id="@+id/txtNum"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/textviewshape"
+        android:textSize="10dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:gravity="center|bottom"
+        android:text="Num" />
+
+    <TextView
+        android:id="@+id/txtCreated"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textSize="16dp"
+        android:background="@drawable/textviewshape"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:gravity="center|bottom"
+        android:text="Created" />
 </LinearLayout>

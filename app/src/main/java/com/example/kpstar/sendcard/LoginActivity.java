@@ -55,11 +55,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mProgress = (ProgressBar)findViewById(R.id.mProgress);
+        mProgress.setVisibility(View.INVISIBLE);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                mProgress.setVisibility(View.VISIBLE);
                 String error = "";
 
                 String email = editEmail.getText().toString();
@@ -124,8 +126,15 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("UserPasswd", "");
                 }
                 editor.putBoolean("RememberMe", rememFlag);
+                editor.apply();
+
+                String userRole = intent.getStringExtra("userrole");
+                if (userRole.equals("client")) {
+                    startClient();
+                    return;
+                }
                 Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-                startIntent();
+                startIntent(intent);
                 return;
             } else if (temp_desc == "Failure") {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
@@ -138,8 +147,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    public void startIntent() {
+    public void startIntent(Intent intent) {
         Intent mIntent = new Intent(this, DashboardActivity.class);
+        mIntent.putExtras(intent);
+        startActivity(mIntent);
+        finish();
+    }
+
+    public void startClient() {
+        Intent mIntent = new Intent(this, MainActivity.class);
         startActivity(mIntent);
         finish();
     }

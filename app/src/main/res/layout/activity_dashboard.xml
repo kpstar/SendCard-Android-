@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:text="Admin : Mateen"
+        android:text=""
         android:textColor="@color/colorRed"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -39,13 +39,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnMain"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtRole"
-        app:layout_constraintTop_toBottomOf="@+id/txtRole" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRole"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnMain"

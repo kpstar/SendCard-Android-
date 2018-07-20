@@ -13,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -20,6 +22,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -45,6 +48,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import me.grantland.widget.AutofitTextView;
+
 public class CardActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView mImgProfile  = null;
@@ -52,7 +57,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
     private static int RESULT_LOAD_IMAGE = 1;
     private static int CAMERA_REQUEST = 2;
     TextView mTemp = null;
-    SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreferences;
     public Uri selectedImage = null;
     public String imageUrl ;
     int mWidth;
@@ -62,6 +67,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout mLayout  = null;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,42 +83,42 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         mImgProfile = (ImageView)findViewById(R.id.imageProfile);
         mImgProfile.setMaxWidth(mWidth/2);
         mImgProfile.setMinimumWidth(mWidth/2);
-        Bitmap bitmap = ((BitmapDrawable)mImgProfile.getDrawable()).getBitmap();
-        dataimage = getImageUri(this, bitmap);
-        mImgProfile.setOnClickListener(this);
-
-        //
+        Bitmap bitmap = null;
 
         mSendBtn = (Button)findViewById(R.id.sendBtn);
         mSendBtn.setOnClickListener(this);
 
         sharedPreferences = getSharedPreferences("Profile", Context.MODE_PRIVATE);
 
+        String input = sharedPreferences.getString("image", "");
+        if (input.isEmpty()) {
+            mImgProfile.setImageDrawable(getDrawable(R.drawable.noimage));
+        } else {
+            bitmap = decodeBase64(input);
+            mImgProfile.setImageBitmap(bitmap);
+        }
 
-        mTemp = (TextView)findViewById(R.id.edtName);
-        mTemp.setText(sharedPreferences.getString("fullname", ""));
-        mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHe);
+        mImgProfile.setOnClickListener(this);
+
+        AutofitTextView mTemps = null;
+        mTemps = (AutofitTextView) findViewById(R.id.edtName);
+        mTemps.setText(sharedPreferences.getString("fullname", ""));
 
         mTemp = (TextView)findViewById(R.id.edtJob);
         mTemp.setText(sharedPreferences.getString("jobtitle", ""));
         mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHeight);
 
-        mTemp = (TextView)findViewById(R.id.edtCompany);
-        mTemp.setText(sharedPreferences.getString("companyname", ""));
-        mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHeight);
+        mTemps = (AutofitTextView) findViewById(R.id.edtCompany);
+        mTemps.setText(sharedPreferences.getString("companyname", ""));
 
         mTemp = (TextView)findViewById(R.id.edtPhone);
         mTemp.setText(sharedPreferences.getString("phone", ""));
         mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHeight);
 
-        mTemp = (TextView)findViewById(R.id.edtEmail);
+        mTemps = (AutofitTextView)findViewById(R.id.edtEmail);
         String email = sharedPreferences.getString("email", "");
-        float emailWidth = mHeight;
-        if (email.length() > 18) {
-            emailWidth = (float) (mWidth/((email.length()-5)*2.0f));
-        }
-        mTemp.setText(email);
-        mTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, emailWidth);
+        mTemps.setText(email);
+        float emailWidth;
 
         mTemp = (TextView)findViewById(R.id.edtAddress);
         email = sharedPreferences.getString("address", "");
@@ -123,7 +129,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         mTemp = (TextView)findViewById(R.id.edtWebsite);
         email = sharedPreferences.getString("website", "");
         emailWidth = mHeight;
-        if (email.length() > 18) {
+        if (email.length() > 20) {
             emailWidth = (float) (mWidth/((email.length()-5)*2.0f));
         }
         mTemp.setText(email);
@@ -134,6 +140,12 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
         lparams.height = mWidth/2;
         mLayout.setLayoutParams(lparams);
 
+    }
+
+    public static Bitmap decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     @Override
@@ -270,7 +282,9 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String getTextBody() {
-        return "Please Share this image on the Social Media platform you choose. Your share & referral will help bring in my next sale. Thank You";
+        //return "Please Share this image on the Social Media platform you choose. Your share & referral will help bring in my next sale. Thank You";
+        return "Please Share this image on the Social Media platform of your choice.\n" + "Your share & referral will help bring in my next customer.\n" +
+                "Thank You\n";
     }
 
     @Override
@@ -289,7 +303,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            dataimage = getImageUri(this,(Bitmap)(BitmapFactory.decodeFile(picturePath)));
+//            dataimage = getImageUri(this,(Bitmap)(BitmapFactory.decodeFile(picturePath)));
             Bitmap bitmap = (Bitmap)BitmapFactory.decodeFile(picturePath);
             try {
                 ExifInterface ei = new ExifInterface(picturePath);
@@ -315,6 +329,7 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
                     default:
                         rotatedBitmap = bitmap;
                 }
+                encodeTobase64(rotatedBitmap);
                 mImgProfile.setImageBitmap(rotatedBitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -365,11 +380,27 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
                     default:
                         rotatedBitmap = bitmap;
                 }
+                encodeTobase64(rotatedBitmap);
                 mImgProfile.setImageBitmap(rotatedBitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void encodeTobase64(Bitmap image) {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.d("Image Log:", imageEncoded);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("image", imageEncoded);
+        editor.commit();
+
+        //return imageEncoded;
     }
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -379,20 +410,10 @@ public class CardActivity extends AppCompatActivity implements View.OnClickListe
                 matrix, true);
     }
 
-    public byte[] getImageUri(Context inContext, Bitmap inImage) {
-
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        //String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        //return Uri.parse(path);
-        byte[] array = bytes.toByteArray();
-        return array;
-    }
-
     public Uri getImageUrl(Context inContext, Bitmap inImage) {
 
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         Uri url = null;
         try {
